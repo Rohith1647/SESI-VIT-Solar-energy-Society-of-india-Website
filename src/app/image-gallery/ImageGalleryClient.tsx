@@ -38,6 +38,31 @@ const navItems = [
 export default function ImageGalleryClient({ images }: { images: any[] }) {
   const [activeTab, setActiveTab] = useState("/image-gallery");
 
+  const defaultImages = [
+    {
+      title: "Solar Panel Installation",
+      subtitle: "Hands-on training session on campus",
+      image: "/sponsar-images/who-workshop.jpg"
+    },
+    {
+      title: "SESI Tech Talk",
+      subtitle: "Guest lecture from renewable energy industry experts",
+      image: "/sponsar-images/who-event.jpg"
+    },
+    {
+      title: "VIT Solar Chapter Team",
+      subtitle: "Core committee and members of SESI chapter",
+      image: "/sponsar-images/who-team.jpg"
+    },
+    {
+      title: "Industry Training Program",
+      subtitle: "Hands-on solar installation workshop",
+      image: "/sponsar-images/who-industry.jpg"
+    }
+  ];
+
+  const galleryImages = images && images.length > 0 ? images : defaultImages;
+
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto bg-black antialiased flex flex-col justify-start">
       {/* Absolute 3D Starry Background Layer */}
@@ -57,7 +82,7 @@ export default function ImageGalleryClient({ images }: { images: any[] }) {
 
       {/* The 3D Dome Gallery (Shifted down below the header) */}
       <div className="w-full h-[70vh] min-h-[500px] md:h-[80vh] relative z-10 mt-[180px]">
-        <ImagegalleryDomeGallery images={images} />
+        <ImagegalleryDomeGallery images={galleryImages} />
       </div>
 
       {/* Gallery Page Footer */}
