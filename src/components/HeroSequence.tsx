@@ -140,7 +140,7 @@ export default function HeroSequence() {
           style={{ opacity: textOpacity, transform: `translateY(${textTranslateY}px)` }}
         >
           <h1 className="font-display-lg text-5xl md:text-display-lg font-extrabold leading-tight mb-2 transition-opacity duration-75 flex flex-col items-center text-center">
-              <span className="bg-gradient-to-r from-white via-amber-400 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_5px_20px_rgba(0,0,0,1)] drop-shadow-[0_2px_4px_rgba(0,0,0,1)] pb-1">Solar Energy Society Of India</span>
+              <span className="bg-gradient-to-r from-white via-amber-400 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_5px_20px_rgba(0,0,0,1)] drop-shadow-[0_2px_4px_rgba(0,0,0,1)] pb-1">Solar Energy Society of India</span>
               <span className="bg-gradient-to-r from-white via-amber-400 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_5px_20px_rgba(0,0,0,1)] drop-shadow-[0_2px_4px_rgba(0,0,0,1)] text-3xl md:text-[40px] mt-2 pb-1">VIT Vellore Institute of Technology</span>
               <span className="bg-gradient-to-r from-white via-amber-400 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_5px_20px_rgba(0,0,0,1)] drop-shadow-[0_2px_4px_rgba(0,0,0,1)] text-3xl md:text-[40px] mt-2 pb-1">Student Chapter</span>
           </h1>
