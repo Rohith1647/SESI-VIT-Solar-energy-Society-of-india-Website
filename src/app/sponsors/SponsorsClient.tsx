@@ -62,6 +62,16 @@ export default function SponsorsClient({ ivSlides, faqs, achievements, sponsorPa
   const [ivSlideIndex, setIvSlideIndex] = React.useState(0);
   const [activeTab, setActiveTab] = React.useState("/sponsors");
   const [heroImageError, setHeroImageError] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const navItems = [
     { label: "HOME", href: "/" },
@@ -279,7 +289,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements, sponsorPa
   const pocLinkedin = sponsorPageData?.pocLinkedin || "https://www.linkedin.com/in/thilipan-murugesan/";
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[#ededed] font-sans relative overflow-x-hidden">
+    <main className="min-h-screen bg-transparent md:bg-[#050505] text-[#ededed] font-sans relative overflow-x-hidden">
       <PillNav 
         items={navItems} 
         activeHref={activeTab} 
@@ -287,12 +297,14 @@ export default function SponsorsClient({ ivSlides, faqs, achievements, sponsorPa
       />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <SponsarLightfall
-          colors={LIGHTFALL_COLORS}
+          colors={isMobile ? ['#EAB308', '#EAB308', '#EAB308'] : LIGHTFALL_COLORS}
           backgroundColor="#EAB308"
           streakWidth={0.9}
           streakCount={1}
-          backgroundGlow={1.4}
+          backgroundGlow={isMobile ? 2.6 : 1.4}
           density={0.3}
+          glow={isMobile ? 1.6 : 1.0}
+          mouseRadius={isMobile ? 0.5 : 1.0}
         />
       </div>
       
