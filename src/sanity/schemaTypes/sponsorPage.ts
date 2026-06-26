@@ -24,6 +24,26 @@ export const sponsorPage = defineType({
       type: 'image',
       options: { hotspot: true },
     }),
+    defineField({
+      name: 'sponsoredEvents',
+      title: 'Sponsored Events & Company Showcase',
+      description: 'Upload images of events, sponsoring company logo, title, and description.',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          name: 'sponsoredEventItem',
+          title: 'Sponsored Event Item',
+          fields: [
+            { name: 'eventTitle', title: 'Event Title', type: 'string' },
+            { name: 'sponsorName', title: 'Sponsoring Company Name', type: 'string' },
+            { name: 'description', title: 'Event & Sponsorship Description', type: 'text' },
+            { name: 'eventImage', title: 'Event Image', type: 'image', options: { hotspot: true } },
+            { name: 'sponsorLogo', title: 'Sponsoring Company Logo', type: 'image', options: { hotspot: true } },
+          ]
+        }
+      ]
+    }),
     // WHO WE ARE
     defineField({
       name: 'whoTitle',

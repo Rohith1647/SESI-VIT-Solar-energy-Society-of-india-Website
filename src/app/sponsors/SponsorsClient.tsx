@@ -280,6 +280,37 @@ export default function SponsorsClient({ ivSlides, faqs, achievements, sponsorPa
   };
   const metricsData = getMetrics();
 
+  const defaultSponsoredEvents = [
+    {
+      eventTitle: "Renewable Tech Hackathon",
+      sponsorName: "GreenTech Corp",
+      description: "GreenTech Corp sponsored our 24-hour hackathon, offering mentorship and cash prizes for innovative student solar tracker designs.",
+      eventImage: "/sponsar-images/gallery-1.jpg",
+      sponsorLogo: "/sponsar-images/partner-1.jpg",
+    },
+    {
+      eventTitle: "Annual Solar Innovation Summit",
+      sponsorName: "CleanEnergy Ltd",
+      description: "CleanEnergy Ltd partnered with us for a keynote-driven summit covering advanced photovoltaics and local grid load balance solutions.",
+      eventImage: "/sponsar-images/gallery-2.jpg",
+      sponsorLogo: "/sponsar-images/partner-2.jpg",
+    }
+  ];
+
+  const getSponsoredEvents = () => {
+    if (sponsorPageData?.sponsoredEvents && sponsorPageData.sponsoredEvents.length > 0) {
+      return sponsorPageData.sponsoredEvents.map((item: any) => ({
+        eventTitle: item.eventTitle || "",
+        sponsorName: item.sponsorName || "",
+        description: item.description || "",
+        eventImage: item.eventImage ? getImageUrl(item.eventImage) : "/sponsar-images/gallery-1.jpg",
+        sponsorLogo: item.sponsorLogo ? getImageUrl(item.sponsorLogo) : "/sponsar-images/partner-1.jpg",
+      }));
+    }
+    return defaultSponsoredEvents;
+  };
+  const sponsoredEventsData = getSponsoredEvents();
+
   // Contact section fallback
   const contactTitle = sponsorPageData?.contactTitle || "Let's Build Something Meaningful Together";
   const contactDescription = sponsorPageData?.contactDescription || "Interested in collaborating with SESI? We would love to explore opportunities for industry engagement, technical initiatives, sustainability programs, and student development.";
@@ -310,6 +341,78 @@ export default function SponsorsClient({ ivSlides, faqs, achievements, sponsorPa
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* SECTION - SPONSORED EVENTS SHOWCASE (Temporarily disabled) */}
+        {false && (
+        <section className="pt-32 pb-20 border-b border-[#d4af37]/20 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 uppercase tracking-wider text-gradient-gold heading-readable">
+              Sponsor Spotlights
+            </h2>
+            <p className="text-gray-400 text-lg">
+              Showcasing the high-impact events and technical initiatives made possible by our industry partners.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            {sponsoredEventsData.map((item: any, idx: number) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
+                className="bg-neutral-900/30 border border-neutral-800/80 rounded-[2rem] overflow-hidden hover:border-[#d4af37]/30 transition-all duration-300 group shadow-lg"
+              >
+                {/* Event Image Container */}
+                <div className="relative aspect-video w-full overflow-hidden bg-neutral-950">
+                  <img
+                    src={item.eventImage}
+                    alt={item.eventTitle}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+                  
+                  {/* Sponsoring Company Logo (Badge overlay) */}
+                  <div className="absolute bottom-4 right-4 flex items-center gap-3 bg-black/80 backdrop-blur-md border border-[#d4af37]/30 px-4 py-2 rounded-full shadow-lg">
+                    <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-white p-0.5">
+                      <img
+                        src={item.sponsorLogo}
+                        alt={item.sponsorName}
+                        className="w-full h-full object-contain rounded-full"
+                      />
+                    </div>
+                    <span className="text-xs font-bold text-gray-200 uppercase tracking-wider">
+                      {item.sponsorName}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="p-8">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-[#d4af37]/10 text-[#d4af37] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest border border-[#d4af37]/20">
+                      SPONSORED EVENT
+                    </span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#d4af37] transition-colors">
+                    {item.eventTitle}
+                  </h3>
+                  <p className="text-gray-400 leading-relaxed text-sm">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+        )}
+
         {/* SECTION 1 - HERO */}
         <section className="pt-32 pb-20 border-b border-[#d4af37]/20 relative">
           <div className="text-center max-w-4xl mx-auto">

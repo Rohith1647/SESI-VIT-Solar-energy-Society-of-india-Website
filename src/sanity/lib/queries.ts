@@ -110,6 +110,7 @@ export const SPONSOR_PAGE_QUERY = defineQuery(`
     heroTitle,
     heroDescription,
     heroImage,
+    sponsoredEvents,
     whoTitle,
     whoDescription1,
     whoDescription2,
