@@ -46,9 +46,17 @@ interface SponsorsClientProps {
   ivSlides: Array<{ name: string; image: any }>;
   faqs: Array<{ question: string; answer: string }>;
   achievements: Array<{ title: string; tag: string; imageSrc: any }>;
+  sponsorPageData?: any;
 }
 
-export default function SponsorsClient({ ivSlides, faqs, achievements }: SponsorsClientProps) {
+const iconMap: Record<string, any> = {
+  GraduationCap,
+  Network,
+  Presentation,
+  Sun
+};
+
+export default function SponsorsClient({ ivSlides, faqs, achievements, sponsorPageData }: SponsorsClientProps) {
   const [openFAQIndex, setOpenFAQIndex] = React.useState<number | null>(null);
   const [lightboxImg, setLightboxImg] = React.useState<string | null>(null);
   const [ivSlideIndex, setIvSlideIndex] = React.useState(0);
@@ -72,6 +80,203 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
     }, 3000);
     return () => clearInterval(interval);
   }, [ivSlides]);
+
+  // Hero Section data fallback
+  const heroTitle = sponsorPageData?.heroTitle || "Building Connections Between Industry and Future Engineers";
+  const heroDescription = sponsorPageData?.heroDescription || "Partner with VIT Vellore's premier community of engineering talent. We bridge the gap between academia and the renewable energy industry through high-impact technical initiatives.";
+  const heroImageSrc = sponsorPageData?.heroImage ? getImageUrl(sponsorPageData.heroImage) : "/sponsar-images/hero.jpg";
+
+  // Who We Are fallback
+  const whoTitle = sponsorPageData?.whoTitle || "Who We Are";
+  const whoDescription1 = sponsorPageData?.whoDescription1 || "The Solar Energy Society of India (SESI) Student Chapter at VIT Vellore is a community focused on renewable energy, sustainability, engineering innovation, and industry engagement.";
+  const whoDescription2 = sponsorPageData?.whoDescription2 || "Through technical events, workshops, competitions, and collaborative initiatives, we connect students with organizations shaping the future of energy and technology.";
+  
+  const getWhoImage = (index: number, defaultSrc: string) => {
+    if (sponsorPageData?.whoImages && sponsorPageData.whoImages[index]) {
+      return getImageUrl(sponsorPageData.whoImages[index]);
+    }
+    return defaultSrc;
+  };
+
+  // Why Partner With Us fallback
+  const defaultWhyCards = [
+    { title: "Talent Engagement", desc: "Connect with motivated engineering students interested in technology, sustainability, and innovation.", icon: GraduationCap },
+    { title: "Industry Presence", desc: "Build visibility within a focused technical community through events and collaborative initiatives.", icon: Network },
+    { title: "Technical Outreach", desc: "Share expertise through workshops, sessions, challenges, and industry interactions.", icon: Presentation },
+    { title: "Sustainability Leadership", desc: "Support renewable energy awareness and innovation-driven activities.", icon: Sun }
+  ];
+
+  const getWhyCards = () => {
+    if (sponsorPageData?.whyCards && sponsorPageData.whyCards.length > 0) {
+      return sponsorPageData.whyCards.map((card: any, idx: number) => {
+        const IconComp = iconMap[card.icon] || defaultWhyCards[idx]?.icon || Sun;
+        return {
+          title: card.title || defaultWhyCards[idx]?.title || "",
+          desc: card.desc || defaultWhyCards[idx]?.desc || "",
+          icon: IconComp
+        };
+      });
+    }
+    return defaultWhyCards;
+  };
+  const whyCardsData = getWhyCards();
+
+  // Achievements text fallback
+  const achievementsTitle = sponsorPageData?.achievementsTitle || "Achievements";
+  const achievementsDescription = sponsorPageData?.achievementsDescription || (
+    <>
+      Our chapter has been honoured with the{" "}
+      <span
+        className="font-bold"
+        style={{
+          background: "linear-gradient(to right, #c084fc, #e879f9, #f0abfc)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0 0 8px rgba(192,132,252,0.7)) drop-shadow(0 0 20px rgba(232,121,249,0.4))",
+        }}
+      >Best Chapter Award</span>{" "}
+      for two consecutive years —{" "}
+      <span className="text-[#14b8a6] font-semibold">2024–2025</span> and{" "}
+      <span className="text-[#14b8a6] font-semibold">2025–2026</span> — reflecting our
+      deep-rooted dedication to advancing sustainable energy, driving engineering
+      excellence, and building a community that actively shapes the future of
+      renewables.
+    </>
+  );
+
+  // Partnership Opportunities fallback
+  const defaultPartnerships = [
+    { title: "Event Partnerships", desc: "Brand visibility through technical events and student initiatives.", img: "/sponsar-images/offer-events.jpg" },
+    { title: "Industry Collaborations", desc: "Workshops, expert talks, technical sessions, and knowledge sharing.", img: "/sponsar-images/offer-collab.jpg" },
+    { title: "Talent Engagement", desc: "Internships, recruitment branding, and student interaction opportunities.", img: "/sponsar-images/offer-talent.jpg" },
+    { title: "Innovation Programs", desc: "Hackathons, competitions, project showcases, and technical challenges.", img: "/sponsar-images/offer-innovation.jpg" }
+  ];
+
+  const getPartnerships = () => {
+    if (sponsorPageData?.partnerships && sponsorPageData.partnerships.length > 0) {
+      return sponsorPageData.partnerships.map((item: any, i: number) => ({
+        title: item.title || defaultPartnerships[i]?.title || "",
+        desc: item.desc || defaultPartnerships[i]?.desc || "",
+        img: item.image ? getImageUrl(item.image) : defaultPartnerships[i]?.img
+      }));
+    }
+    return defaultPartnerships;
+  };
+  const partnershipsData = getPartnerships();
+
+  // Community Impact Stats fallback
+  const defaultImpactStats = [
+    { value: "86", label: "Events Conducted" },
+    { value: "1500+", label: "Students Engaged" },
+    { value: "20+", label: "Industry Sessions" },
+    { value: "18", label: "Collaborative Initiatives" }
+  ];
+
+  const getImpactStats = () => {
+    if (sponsorPageData?.impactStats && sponsorPageData.impactStats.length > 0) {
+      return sponsorPageData.impactStats.map((stat: any, i: number) => ({
+        value: stat.value || defaultImpactStats[i]?.value || "",
+        label: stat.label || defaultImpactStats[i]?.label || ""
+      }));
+    }
+    return defaultImpactStats;
+  };
+  const impactStatsData = getImpactStats();
+
+  // Ways to Collaborate Table fallback
+  const defaultFeatures = [
+    "Brand Visibility", 
+    "Dedicated segment in stall during Expo", 
+    "Dedicated media reels and posts", 
+    "Partnership Certificates", 
+    "Outreach projects showcase", 
+    "Special expert talks at VIT", 
+    "Direct recruitment & talent pool access",
+    "Co-branded technical hackathons",
+    "Exclusive Student Chapter Integration"
+  ];
+
+  const getCollaborations = () => {
+    if (sponsorPageData?.collaborations && sponsorPageData.collaborations.length > 0) {
+      return sponsorPageData.collaborations.map((row: any) => ({
+        feature: row.feature || "",
+        eventPartner: row.eventPartner ?? false,
+        industryPartner: row.industryPartner ?? false,
+        renewablePartner: row.renewablePartner ?? false
+      }));
+    }
+    return null;
+  };
+  const collaborationsData = getCollaborations();
+
+  // Industrial Visits text fallback
+  const industrialVisitsTitle = sponsorPageData?.industrialVisitsTitle || "Our Industrial Visits";
+  const industrialVisitsDescription = sponsorPageData?.industrialVisitsDescription || "We believe in bridging the gap between academia and industry. Our chapter organizes regular industrial visits to major engineering and technology hubs like Amphenol and URSC Bangalore. These visits provide our members with invaluable hands-on exposure to cutting-edge manufacturing, research, and sustainable energy practices.";
+
+  // Gallery Highlights fallback
+  const defaultGallery = [
+    { img: "/sponsar-images/gallery-1.jpg", h: "h-48 md:h-64" },
+    { img: "/sponsar-images/gallery-2.jpg", h: "h-64 md:h-96" },
+    { img: "/sponsar-images/gallery-3.png", h: "h-48 md:h-64" },
+    { img: "/sponsar-images/gallery-4.jpg", h: "h-64 md:h-96" },
+    { img: "/sponsar-images/gallery-5.jpg", h: "h-48 md:h-64" },
+    { img: "/sponsar-images/gallery-6.jpg", h: "h-48 md:h-64" }
+  ];
+
+  const getGallery = () => {
+    if (sponsorPageData?.galleryImages && sponsorPageData.galleryImages.length > 0) {
+      return sponsorPageData.galleryImages.map((img: any, i: number) => ({
+        img: getImageUrl(img),
+        h: defaultGallery[i]?.h || "h-48 md:h-64"
+      }));
+    }
+    return defaultGallery;
+  };
+  const galleryData = getGallery();
+
+  // Partnership Impact Metrics fallback
+  const defaultMetrics = [
+    { 
+      title: "Core Member Career Focus", 
+      value: "92%", 
+      desc: "of our graduating members actively transition into renewable energy and core engineering roles.",
+      detail: "High-concentration of specialized engineering talent."
+    },
+    { 
+      title: "EEE STUDENT ENGAGEMENT", 
+      value: "68%", 
+      desc: "of the Electrical Engineering student body at VIT Vellore interacts with SESI initiatives annually.",
+      detail: "Targeted brand penetration within the core engineering department."
+    },
+    { 
+      title: "Project Success Rate", 
+      value: "100%", 
+      desc: "of our industry-collaborated technical projects reach successful completion or prototype stage.",
+      detail: "Guaranteed outcomes for technical R&D partnerships."
+    }
+  ];
+
+  const getMetrics = () => {
+    if (sponsorPageData?.impactMetrics && sponsorPageData.impactMetrics.length > 0) {
+      return sponsorPageData.impactMetrics.map((metric: any, i: number) => ({
+        title: metric.title || defaultMetrics[i]?.title || "",
+        value: metric.value || defaultMetrics[i]?.value || "",
+        desc: metric.desc || defaultMetrics[i]?.desc || "",
+        detail: metric.detail || defaultMetrics[i]?.detail || ""
+      }));
+    }
+    return defaultMetrics;
+  };
+  const metricsData = getMetrics();
+
+  // Contact section fallback
+  const contactTitle = sponsorPageData?.contactTitle || "Let's Build Something Meaningful Together";
+  const contactDescription = sponsorPageData?.contactDescription || "Interested in collaborating with SESI? We would love to explore opportunities for industry engagement, technical initiatives, sustainability programs, and student development.";
+  const pocName = sponsorPageData?.pocName || "Partnership POC";
+  const pocEmail = sponsorPageData?.pocEmail || "thilipan.m2023@vitstudent.ac.in";
+  const pocPhone = sponsorPageData?.pocPhone || "+91 7305499052";
+  const pocLinkedin = sponsorPageData?.pocLinkedin || "https://www.linkedin.com/in/thilipan-murugesan/";
 
   return (
     <main className="min-h-screen bg-[#050505] text-[#ededed] font-sans relative overflow-x-hidden">
@@ -102,7 +307,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               transition={{ duration: 0.8 }}
               className="text-4xl md:text-6xl font-bold tracking-tight mb-6 uppercase text-gradient-gold heading-readable"
             >
-              Building Connections Between Industry and Future Engineers
+              {heroTitle}
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -110,7 +315,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed font-medium max-w-3xl mx-auto"
             >
-              Partner with VIT Vellore's premier community of engineering talent. We bridge the gap between academia and the renewable energy industry through high-impact technical initiatives.
+              {heroDescription}
             </motion.p>
             
             <motion.div 
@@ -146,7 +351,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             <div className="aspect-video bg-neutral-900 rounded overflow-hidden relative">
               {!heroImageError ? (
                 <img 
-                  src="/sponsar-images/hero.jpg" 
+                  src={heroImageSrc} 
                   alt="Industry and Student Connection" 
                   className="w-full h-full object-cover"
                   onError={() => setHeroImageError(true)}
@@ -172,13 +377,13 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 uppercase tracking-wider text-gradient-gold heading-readable">Who We Are</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 uppercase tracking-wider text-gradient-gold heading-readable">{whoTitle}</h2>
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
                 <p>
-                  The Solar Energy Society of India (SESI) Student Chapter at VIT Vellore is a community focused on renewable energy, sustainability, engineering innovation, and industry engagement.
+                  {whoDescription1}
                 </p>
                 <p>
-                  Through technical events, workshops, competitions, and collaborative initiatives, we connect students with organizations shaping the future of energy and technology.
+                  {whoDescription2}
                 </p>
               </div>
             </motion.div>
@@ -190,16 +395,16 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               transition={{ duration: 0.8 }}
             >
               <div className="border border-[#14b8a6]/30 bg-neutral-900 rounded-2xl aspect-square overflow-hidden relative">
-                <img src="/sponsar-images/who-workshop.jpg" alt="SESI VIT Solar Energy Workshop" className="w-full h-full object-cover" />
+                <img src={getWhoImage(0, "/sponsar-images/who-workshop.jpg")} alt="SESI VIT Solar Energy Workshop" className="w-full h-full object-cover" />
               </div>
               <div className="border border-[#14b8a6]/30 bg-neutral-900 rounded-2xl aspect-square mt-8 overflow-hidden relative">
-                <img src="/sponsar-images/who-event.jpg" alt="SESI Student Chapter Technical Event" className="w-full h-full object-cover" />
+                <img src={getWhoImage(1, "/sponsar-images/who-event.jpg")} alt="SESI Student Chapter Technical Event" className="w-full h-full object-cover" />
               </div>
               <div className="border border-[#14b8a6]/30 bg-neutral-900 rounded-2xl aspect-square -mt-8 overflow-hidden relative">
-                <img src="/sponsar-images/who-team.jpg" alt="SESI VIT Chapter Team Members" className="w-full h-full object-cover" />
+                <img src={getWhoImage(2, "/sponsar-images/who-team.jpg")} alt="SESI VIT Chapter Team Members" className="w-full h-full object-cover" />
               </div>
               <div className="border border-[#14b8a6]/30 bg-neutral-900 rounded-2xl aspect-square overflow-hidden relative">
-                <img src="/sponsar-images/who-industry.jpg" alt="SESI VIT Solar Industry Training Session" className="w-full h-full object-cover" />
+                <img src={getWhoImage(3, "/sponsar-images/who-industry.jpg")} alt="SESI VIT Solar Industry Training Session" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           </div>
@@ -216,12 +421,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             Why Organizations Partner With Us
           </motion.h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "Talent Engagement", desc: "Connect with motivated engineering students interested in technology, sustainability, and innovation.", icon: GraduationCap },
-              { title: "Industry Presence", desc: "Build visibility within a focused technical community through events and collaborative initiatives.", icon: Network },
-              { title: "Technical Outreach", desc: "Share expertise through workshops, sessions, challenges, and industry interactions.", icon: Presentation },
-              { title: "Sustainability Leadership", desc: "Support renewable energy awareness and innovation-driven activities.", icon: Sun }
-            ].map((item, i) => (
+            {whyCardsData.map((item: any, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 20 }}
@@ -259,26 +459,10 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               </motion.div>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 uppercase tracking-wider text-gradient-gold heading-readable">
-              Achievements
+              {achievementsTitle}
             </h2>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Our chapter has been honoured with the{" "}
-              <span
-                className="font-bold"
-                style={{
-                  background: "linear-gradient(to right, #c084fc, #e879f9, #f0abfc)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  filter: "drop-shadow(0 0 8px rgba(192,132,252,0.7)) drop-shadow(0 0 20px rgba(232,121,249,0.4))",
-                }}
-              >Best Chapter Award</span>{" "}
-              for two consecutive years —{" "}
-              <span className="text-[#14b8a6] font-semibold">2024–2025</span> and{" "}
-              <span className="text-[#14b8a6] font-semibold">2025–2026</span> — reflecting our
-              deep-rooted dedication to advancing sustainable energy, driving engineering
-              excellence, and building a community that actively shapes the future of
-              renewables.
+              {achievementsDescription}
             </p>
           </motion.div>
 
@@ -378,12 +562,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             Partnership Opportunities
           </motion.h2>
           <div className="grid md:grid-cols-2 gap-8">
-            {[
-              { title: "Event Partnerships", desc: "Brand visibility through technical events and student initiatives.", img: "offer-events.jpg" },
-              { title: "Industry Collaborations", desc: "Workshops, expert talks, technical sessions, and knowledge sharing.", img: "offer-collab.jpg" },
-              { title: "Talent Engagement", desc: "Internships, recruitment branding, and student interaction opportunities.", img: "offer-talent.jpg" },
-              { title: "Innovation Programs", desc: "Hackathons, competitions, project showcases, and technical challenges.", img: "offer-innovation.jpg" }
-            ].map((item, i) => (
+            {partnershipsData.map((item: any, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -393,7 +572,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
                 className="flex flex-col md:flex-row bg-neutral-900/30 backdrop-blur-xl border border-neutral-800/50 rounded-[2rem] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)] group hover:border-[#14b8a6]/50 transition-all"
               >
                 <div className="w-full md:w-1/3 bg-neutral-800 overflow-hidden relative min-h-[150px]">
-                  <img src={`/sponsar-images/${item.img}`} alt={item.title} className="w-full h-full object-cover" />
+                  <img src={item.img} alt={item.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-8 w-full md:w-2/3 flex flex-col justify-center">
                   <h3 className="text-xl font-bold mb-2 uppercase text-[#14b8a6]">{item.title}</h3>
@@ -415,12 +594,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             Community Impact
           </motion.h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "86", label: "Events Conducted" },
-              { value: "1500+", label: "Students Engaged" },
-              { value: "20+", label: "Industry Sessions" },
-              { value: "18", label: "Collaborative Initiatives" }
-            ].map((stat, i) => (
+            {impactStatsData.map((stat: any, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, scale: 0.5 }}
@@ -458,24 +632,31 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               <div className="text-center text-[#14b8a6]">Industry Partner</div>
               <div className="text-center text-[#d4af37]">Renewable Energy Partner<br/><span className="text-xs text-[#d4af37]/70">(Year-Long)</span></div>
             </div>
-            {[
-              "Brand Visibility", 
-              "Dedicated segment in stall during Expo", 
-              "Dedicated media reels and posts", 
-              "Partnership Certificates", 
-              "Outreach projects showcase", 
-              "Special expert talks at VIT", 
-              "Direct recruitment & talent pool access",
-              "Co-branded technical hackathons",
-              "Exclusive Student Chapter Integration"
-            ].map((feature, i, arr) => (
-              <div key={i} className={`grid grid-cols-4 gap-4 py-6 items-center hover:bg-white/5 transition-colors rounded-lg px-2 ${i !== arr.length - 1 ? 'border-b border-neutral-800/50' : ''}`}>
-                <div className="col-span-1 text-gray-300 pr-4">{feature}</div>
-                <div className="flex justify-center"><CheckCircle2 className={i <= 3 ? "text-[#14b8a6]" : "text-red-500"} /></div>
-                <div className="flex justify-center"><CheckCircle2 className={i <= 6 ? "text-[#14b8a6]" : "text-red-500"} /></div>
-                <div className="flex justify-center"><CheckCircle2 className="text-[#d4af37]" /></div>
-              </div>
-            ))}
+            {collaborationsData ? (
+              collaborationsData.map((row: any, i: number, arr: any[]) => (
+                <div key={i} className={`grid grid-cols-4 gap-4 py-6 items-center hover:bg-white/5 transition-colors rounded-lg px-2 ${i !== arr.length - 1 ? 'border-b border-neutral-800/50' : ''}`}>
+                  <div className="col-span-1 text-gray-300 pr-4">{row.feature}</div>
+                  <div className="flex justify-center">
+                    {row.eventPartner ? <CheckCircle2 className="text-[#14b8a6]" /> : <CheckCircle2 className="text-red-500" />}
+                  </div>
+                  <div className="flex justify-center">
+                    {row.industryPartner ? <CheckCircle2 className="text-[#14b8a6]" /> : <CheckCircle2 className="text-red-500" />}
+                  </div>
+                  <div className="flex justify-center">
+                    {row.renewablePartner ? <CheckCircle2 className="text-[#d4af37]" /> : <CheckCircle2 className="text-red-500" />}
+                  </div>
+                </div>
+              ))
+            ) : (
+              defaultFeatures.map((feature, i, arr) => (
+                <div key={i} className={`grid grid-cols-4 gap-4 py-6 items-center hover:bg-white/5 transition-colors rounded-lg px-2 ${i !== arr.length - 1 ? 'border-b border-neutral-800/50' : ''}`}>
+                  <div className="col-span-1 text-gray-300 pr-4">{feature}</div>
+                  <div className="flex justify-center"><CheckCircle2 className={i <= 3 ? "text-[#14b8a6]" : "text-red-500"} /></div>
+                  <div className="flex justify-center"><CheckCircle2 className={i <= 6 ? "text-[#14b8a6]" : "text-red-500"} /></div>
+                  <div className="flex justify-center"><CheckCircle2 className="text-[#d4af37]" /></div>
+                </div>
+              ))
+            )}
           </motion.div>
         </section>
 
@@ -490,10 +671,10 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               className="text-center mb-16"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-6 uppercase tracking-wider text-gradient-gold heading-readable">
-                Our Industrial Visits
+                {industrialVisitsTitle}
               </h2>
               <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                We believe in bridging the gap between academia and industry. Our chapter organizes regular industrial visits to major engineering and technology hubs like <span className="text-[#14b8a6] font-semibold">Amphenol</span> and <span className="text-[#14b8a6] font-semibold">URSC Bangalore</span>. These visits provide our members with invaluable hands-on exposure to cutting-edge manufacturing, research, and sustainable energy practices.
+                {industrialVisitsDescription}
               </p>
             </motion.div>
 
@@ -551,14 +732,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             Highlights From Our Activities
           </motion.h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              { img: "gallery-1.jpg", h: "h-48 md:h-64" },
-              { img: "gallery-2.jpg", h: "h-64 md:h-96" },
-              { img: "gallery-3.png", h: "h-48 md:h-64" },
-              { img: "gallery-4.jpg", h: "h-64 md:h-96" },
-              { img: "gallery-5.jpg", h: "h-48 md:h-64" },
-              { img: "gallery-6.jpg", h: "h-48 md:h-64" }
-            ].map((item, i) => (
+            {galleryData.map((item: any, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -568,7 +742,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
                 className={`bg-neutral-900/30 backdrop-blur-xl border border-neutral-800/50 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.4)] overflow-hidden group relative ${item.h}`}
               >
                 <img 
-                  src={`/sponsar-images/${item.img}`} 
+                  src={item.img} 
                   alt={`SESI VIT Gallery Highlight ${i + 1}`} 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                 />
@@ -588,26 +762,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             Partnership Impact Metrics
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { 
-                title: "Core Member Career Focus", 
-                value: "92%", 
-                desc: "of our graduating members actively transition into renewable energy and core engineering roles.",
-                detail: "High-concentration of specialized engineering talent."
-              },
-              { 
-                title: "EEE STUDENT ENGAGEMENT", 
-                value: "68%", 
-                desc: "of the Electrical Engineering student body at VIT Vellore interacts with SESI initiatives annually.",
-                detail: "Targeted brand penetration within the core engineering department."
-              },
-              { 
-                title: "Project Success Rate", 
-                value: "100%", 
-                desc: "of our industry-collaborated technical projects reach successful completion or prototype stage.",
-                detail: "Guaranteed outcomes for technical R&D partnerships."
-              }
-            ].map((metric, i) => (
+            {metricsData.map((metric: any, i: number) => (
               <motion.div 
                 key={i} 
                 initial={{ opacity: 0, y: 20 }}
@@ -665,7 +820,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold mb-8 uppercase tracking-wider text-gradient-gold heading-readable"
           >
-            Let's Build Something Meaningful Together
+            {contactTitle}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -674,7 +829,7 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             transition={{ delay: 0.2 }}
             className="text-xl text-gray-300 mb-12"
           >
-            Interested in collaborating with SESI? We would love to explore opportunities for industry engagement, technical initiatives, sustainability programs, and student development.
+            {contactDescription}
           </motion.p>
           
           <div className="flex flex-col md:flex-row gap-8 justify-center items-center mb-12">
@@ -685,19 +840,19 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
               transition={{ delay: 0.4 }}
               className="bg-neutral-900/40 backdrop-blur-xl border border-[#d4af37]/30 p-8 rounded-[2rem] w-full max-w-md shadow-[0_8px_32px_rgba(212,175,55,0.15)]"
             >
-              <h3 className="text-2xl font-bold mb-6 uppercase text-[#14b8a6]">Partnership POC</h3>
+              <h3 className="text-2xl font-bold mb-6 uppercase text-[#14b8a6]">{pocName}</h3>
               <div className="space-y-4 text-left">
                 <p className="text-gray-400 border-b border-neutral-800 pb-2">
                   <span className="text-neutral-500 mr-2">Email</span> 
-                  <a href="mailto:thilipan.m2023@vitstudent.ac.in" className="hover:text-[#d4af37] transition-colors">thilipan.m2023@vitstudent.ac.in</a>
+                  <a href={`mailto:${pocEmail}`} className="hover:text-[#d4af37] transition-colors">{pocEmail}</a>
                 </p>
                 <p className="text-gray-400 border-b border-neutral-800 pb-2">
                   <span className="text-neutral-500 mr-2">Phone</span> 
-                  <a href="tel:+917305499052" className="hover:text-[#d4af37] transition-colors">+91 7305499052</a>
+                  <a href={`tel:${pocPhone}`} className="hover:text-[#d4af37] transition-colors">{pocPhone}</a>
                 </p>
                 <p className="text-gray-400">
                   <span className="text-neutral-500 mr-2">LinkedIn</span> 
-                  <a href="https://www.linkedin.com/in/thilipan-murugesan/" target="_blank" rel="noopener noreferrer" className="hover:text-[#d4af37] transition-colors">thilipan-murugesan</a>
+                  <a href={pocLinkedin.startsWith('http') ? pocLinkedin : `https://${pocLinkedin}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#d4af37] transition-colors">{pocLinkedin.replace('https://www.linkedin.com/in/', '').replace('https://linkedin.com/in/', '').replace(/\/$/, '')}</a>
                 </p>
               </div>
             </motion.div>
@@ -708,11 +863,11 @@ export default function SponsorsClient({ ivSlides, faqs, achievements }: Sponsor
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
-            onClick={() => window.location.href = 'mailto:thilipan.m2023@vitstudent.ac.in'}
+            onClick={() => window.location.href = `mailto:${pocEmail}`}
             className="bg-transparent relative overflow-hidden text-black px-10 py-4 rounded-full uppercase font-bold tracking-widest text-lg shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-shadow btn-fill-anim before:bg-white cursor-pointer"
             style={{ backgroundColor: '#d4af37' }}
           >
-            Contact Partnership POC
+            Contact {pocName}
           </motion.button>
         </section>
 

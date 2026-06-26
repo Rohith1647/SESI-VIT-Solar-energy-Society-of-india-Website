@@ -104,3 +104,31 @@ export const FAQS_QUERY = defineQuery(`
     order
   }
 `)
+
+export const SPONSOR_PAGE_QUERY = defineQuery(`
+  *[_type == "sponsorPage"][0] {
+    heroTitle,
+    heroDescription,
+    heroImage,
+    whoTitle,
+    whoDescription1,
+    whoDescription2,
+    whoImages,
+    whyCards,
+    achievementsTitle,
+    achievementsDescription,
+    partnerships,
+    impactStats,
+    collaborations,
+    industrialVisitsTitle,
+    industrialVisitsDescription,
+    galleryImages,
+    impactMetrics,
+    contactTitle,
+    contactDescription,
+    pocName,
+    pocEmail,
+    pocPhone,
+    pocLinkedin
+  }
+`)

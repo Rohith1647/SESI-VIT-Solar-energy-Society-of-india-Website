@@ -6,6 +6,7 @@ import { achievement } from './achievement'
 import { galleryImage } from './galleryImage'
 import { industrialVisit } from './industrialVisit'
 import { sponsorFaq } from './sponsorFaq'
+import { sponsorPage } from './sponsorPage'
 
 export const schemaTypes = [
   event,
@@ -16,4 +17,5 @@ export const schemaTypes = [
   galleryImage,
   industrialVisit,
   sponsorFaq,
+  sponsorPage,
 ]
