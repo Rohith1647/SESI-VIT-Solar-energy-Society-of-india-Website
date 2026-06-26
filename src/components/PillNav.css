@@ -1,0 +1,219 @@
+/* ==========================================================================
+   Premium Glassmorphic GSAP Liquid Pill Navbar Stylesheet
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@700;800&display=swap');
+
+.pill-nav-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  top: 24px;
+  z-index: 50;
+  padding: 0 16px;
+}
+
+/* Main Translucent Capsule Body Frame */
+.pill-nav {
+  display: flex;
+  align-items: center;
+  background-color: #FACC15 !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  /* Yellow outer boundary line with glow */
+  border: 2px solid #FACC15 !important;
+  padding: 6px;
+  border-radius: 999px;
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 10px 30px rgba(0, 0, 0, 0.5);
+  max-width: max-content;
+}
+
+.pill-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 6px;
+}
+
+/* Brand Logo Container Layout */
+.pill-logo-btn {
+  background: transparent;
+  border: none;
+  border-right: none;
+  padding: 0 16px 0 4px;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  outline: none;
+}
+
+/* EXACT: Tech-style boxy logo font with custom letter-spacing */
+.brand-text-wrapper {
+  font-family: 'Orbitron', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.brand-yellow {
+  color: #111;
+}
+
+/* EXACT: Interactive Link Button Frame Styling */
+.pill {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background: #111 !important;
+
+  /* EXACT: Delicate internal pill outline shape lines */
+  border: none !important;
+  padding: 10px 24px;
+  border-radius: 999px;
+  overflow: hidden;
+  /* Restricts the fluid expansion wave internally */
+
+  /* EXACT: Clean humanist typography setup */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #FACC15 !important;
+  /* Premium brand gold typography color */
+  transition: border-color 0.3s ease;
+  z-index: 1;
+  outline: none;
+}
+
+/* Small yellow dot active indicator at the bottom */
+.pill.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+  width: 10px;
+  height: 10px;
+  background-color: #FACC15;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* GSAP Ring element properties */
+.hover-circle {
+  position: absolute;
+  left: 50%;
+  background: #FACC15 !important;
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.label-stack {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 14px;
+  line-height: 14px;
+  z-index: 1;
+}
+
+.pill-label,
+.pill-label-hover {
+  display: block;
+}
+
+.pill-label-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #111 !important;
+  /* Transforms to dark text inside active wave */
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (min-width: 1025px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .pill-nav {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 24px;
+    justify-content: space-between;
+  }
+
+  .mobile-menu-button {
+    background: transparent;
+    border: 1px solid rgba(17, 17, 17, 0.5);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 8px 10px;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #111;
+  }
+
+  .mobile-menu-popover {
+    position: absolute;
+    top: 100%;
+    right: 16px;
+    width: max-content;
+    min-width: 200px;
+    margin-top: 8px;
+    background: rgba(6, 5, 12, 0.96);
+    backdrop-filter: blur(24px);
+    border: 1.5px solid #FACC15;
+    border-radius: 20px;
+    padding: 16px;
+    visibility: hidden;
+  }
+
+  .mobile-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mobile-menu-link {
+    background: transparent;
+    border: none;
+    color: #FACC15;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+}
