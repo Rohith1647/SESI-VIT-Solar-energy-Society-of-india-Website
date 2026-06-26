@@ -206,10 +206,19 @@ export default function PillNav({
         </div>
 
         {/* Sponsor Badge */}
-        <div className="sponsor-badge desktop-only flex items-center gap-2 pl-3 border-l border-[#111]/20 ml-2 mr-2">
-          <span className="text-[9px] uppercase font-extrabold text-[#111] tracking-widest opacity-60">Sponsor</span>
-          <Link href="/sponsors" className="px-3 py-1 bg-[#111] text-[#FACC15] text-[10px] uppercase font-extrabold rounded-full hover:scale-105 active:scale-95 transition-all shadow-sm cursor-pointer">
-            Hooba Boba
+        <div className="sponsor-badge desktop-only flex items-center gap-2 pl-3 border-l border-[#111]/25 ml-2 mr-2">
+          <span className="text-[9px] uppercase font-black text-[#111] tracking-widest opacity-60">Sponsor</span>
+          <Link href="/sponsors" className="relative group overflow-hidden px-3.5 py-1.5 bg-[#111] border border-transparent text-[#FACC15] text-[10px] uppercase font-extrabold rounded-full transition-all duration-300 hover:scale-105 active:scale-95 sponsor-glow cursor-pointer">
+            {/* Shimmer Effect */}
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-sponsor-shimmer" />
+            
+            <span className="relative flex items-center gap-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-400"></span>
+              </span>
+              Hooba Boba
+            </span>
           </Link>
         </div>
 
@@ -250,8 +259,17 @@ export default function PillNav({
           })}
           <li className="border-t border-[#FACC15]/20 pt-4 mt-2 flex flex-col items-center gap-2">
             <span className="text-[9px] uppercase font-extrabold text-[#FACC15] tracking-widest opacity-60">Sponsored By</span>
-            <Link href="/sponsors" className="px-4 py-1.5 bg-[#FACC15] text-black text-[11px] uppercase font-extrabold rounded-full hover:scale-105 active:scale-95 transition-all shadow-md w-full text-center cursor-pointer">
-              Hooba Boba
+            <Link href="/sponsors" className="relative overflow-hidden w-full px-4 py-2.5 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black text-[11px] uppercase font-black rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_15px_rgba(250,204,21,0.4)] text-center cursor-pointer">
+              {/* Shimmer Effect */}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-sponsor-shimmer" />
+              
+              <span className="relative flex items-center justify-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
+                </span>
+                Hooba Boba
+              </span>
             </Link>
           </li>
         </ul>
